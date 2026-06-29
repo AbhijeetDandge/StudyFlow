@@ -1,5 +1,6 @@
 import type { AdaptivePlan, DailyProgress, InsightMessage, PlannerInput, StudyPlan } from "@/data/types";
-
+// Replace this string with your actual copied Render URL!
+const API_BASE_URL = "https://studyflow-fo3f.onrender.com";
 type AgentHealth = {
   ok: boolean;
   aiConfigured: boolean;
@@ -62,13 +63,13 @@ async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit = {}
 }
 
 export async function fetchAgentHealth() {
-  const response = await fetchWithTimeout("/api/health", {}, 8000);
+  const response = await fetchWithTimeout("${API_BASE_URL}/api/health", {}, 8000);
   return readJson<AgentHealth>(response);
 }
 
 export async function requestGeneratedPlan(input: PlannerInput | Record<string, unknown>) {
   const response = await fetchWithTimeout(
-    "/api/agent/plan",
+    "${API_BASE_URL}/api/agent/plan",
     {
       method: "POST",
       headers: {
@@ -84,7 +85,7 @@ export async function requestGeneratedPlan(input: PlannerInput | Record<string, 
 
 export async function requestProgressAnalysis(plan: StudyPlan, progress: DailyProgress[]) {
   const response = await fetchWithTimeout(
-    "/api/agent/analyze",
+    "${API_BASE_URL}/api/agent/analyze",
     {
       method: "POST",
       headers: {
